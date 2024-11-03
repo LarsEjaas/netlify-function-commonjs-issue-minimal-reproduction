@@ -1,0 +1,42 @@
+{
+  "name": "lars-ejaas-portfolio-v2",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "netlify dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "prettier --write  \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\" && eslint --fix \"src/**/*.{js,ts,jsx,tsx,astro}\""
+  },
+  "engines": {
+    "node": ">=21.2.0",
+    "npm": ">=10.2.3"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.3",
+    "@astrojs/netlify": "^5.5.4",
+    "astro": "^4.15.1",
+    "dotenv": "^16.4.5",
+    "nodemailer": "^6.9.16",
+    "nodemailer-express-handlebars": "^7.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/eslint": "^9.6.1",
+    "@types/node": "^22.8.7",
+    "@types/nodemailer": "^6.4.16",
+    "@types/nodemailer-express-handlebars": "^4.0.5",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
+    "astro-eslint-parser": "^1.0.3",
+    "eslint": "^9.10.0",
+    "eslint-plugin-astro": "^1.2.3",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.6.3"
+  },
+  "$schema": "https://json.schemastore.org/package"
+}

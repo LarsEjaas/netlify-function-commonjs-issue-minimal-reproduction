@@ -1,0 +1,463 @@
+/* establish a layer order from lowest to highest priority */
+@layer reset, global;
+
+@layer reset {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+  picture {
+    line-height: 0;
+  }
+
+  picture {
+    display: block; /* Ensures picture takes up its own block space */
+    max-width: 100%; /* Ensures picture container doesn't exceed its parent's width */
+  }
+
+  picture img {
+    -webkit-user-drag: none;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  a {
+    -webkit-user-drag: none; /* Prevent links from being draggable */
+  }
+}
+
+@layer global {
+  @view-transition {
+    navigation: auto;
+  }
+
+  @media (prefers-reduced-motion) {
+    @view-transition {
+      navigation: none;
+    }
+
+    ::view-transition-group(*),
+    ::view-transition-old(*),
+    ::view-transition-new(*) {
+      animation: none !important;
+    }
+  }
+
+  :root {
+    /* light/dark mode color variables*/
+    --system-light-100: light-dark(#fff, #000);
+    --system-light-200: light-dark(#f9fafa, #171c1c);
+    --system-light-300: light-dark(#eef1f1, #323d3e);
+    --system-light-300-80: light-dark(#eef1f1cc, #323d3ecc);
+    --system-light-300-55: light-dark(#eef1f18c, #323d3e8c);
+    --system-light-400: light-dark(#e3e8e8, #4e5f60);
+    --system-light-500: light-dark(#d8dfdf, #698081);
+    --system-dark-100: light-dark(#698081, #d8dfdf);
+    --system-dark-200: light-dark(#4e5f60, #e3e8e8);
+    --system-dark-200-16: light-dark(#4e5f6029, #e3e8e829);
+    --system-dark-300: light-dark(#323d3e, #eef1f1);
+    --system-dark-300-80: light-dark(#323d3ecc, #eef1f1cc);
+    --system-dark-300-55: light-dark(#323d3e8c, #eef1f18c);
+    --system-dark-400: light-dark(#171c1c, #f9fafa);
+    --system-dark-500: light-dark(#000, #fff);
+    --system-shadow-1: light-dark(#60617152, #00000052);
+    --system-shadow-2: light-dark(#28293d0a, #0000000a);
+    --system-shadow-4: light-dark(#28293d14, #00000014);
+    --system-shadow-5: light-dark(#6061703d, #0000003d);
+    --system-shadow-6: light-dark(#60617029, #00000029);
+    --system-shadow-7: light-dark(#60617045, #00000045);
+    /* global color variables */
+    --bluemunsell: #048ba8;
+    --primary-lighter: #05a3c7;
+    --verdigris-100: hsl(163 86% 89% / 1);
+    --verdigris-100-op: hsl(163.2deg 86.21% 88.63% / 61.18%);
+    --verdigris-200: hsl(168.48deg 86.09% 77.45%);
+    --verdigris-300: hsl(173.14deg 76.09% 63.92%);
+    --verdigris-300-op: hsl(173.14deg 76.09% 63.92% / 0%);
+    --verdigris-400: hsl(178.49deg 64.37% 51.57%);
+    --verdigris-500: hsl(183.28deg 100% 35.88%);
+    --verdigris-600: hsl(188.41deg 100% 30.78%);
+    --verdigris-700: hsl(193.28deg 100% 25.69%);
+    --verdigris-800: hsl(198.68deg 100% 20.78%);
+    --princeton-100: hsl(36.32deg 100% 92.55%);
+    --princeton-200: hsl(33.16deg 100% 85.1%);
+    --princeton-300: hsl(29.73deg 100% 77.84%);
+    --princeton-400: hsl(26.2deg 100% 72.16%);
+    --princeton-500: hsl(22.66deg 100% 63.14%);
+    --princeton-600: hsl(18.95deg 70.37% 52.35%);
+    --princeton-700: hsl(15.6deg 69.44% 42.35%);
+    --flirt-100: #fac9d6;
+    --flirt-100-tr: #fac9d650;
+    --flirt-200: #f595b9;
+    --flirt-300: #e35d9d;
+    --flirt-300-op: #e35d9d00;
+    --flirt-400: #c83489;
+    --flirt-500: #a4036f;
+    --flirt-600: #8d026c;
+    --flirt-700: #760166;
+    --flirt-800: #5f005b;
+    --flirt-900: #49004e;
+    --aquamarine-100: #cffdda;
+    --aquamarine-100-op: #cffdda50;
+    --aquamarine-200: #a0fbbf;
+    --aquamarine-300: #70f4a9;
+    --aquamarine-300-op: #70f4a900;
+    --aquamarine-400: #4be9a0;
+    --aquamarine-500: #16db93;
+    --aquamarine-600: #10bc8e;
+    --aquamarine-700: #0b9d85;
+    --aquamarine-800: #077f76;
+    --aquamarine-900: #046669;
+    --font-size-1: 0.75rem; /** 12px */
+    --font-size-2: 0.875rem; /** 14px */
+    --font-size-3: 1rem; /* 16px */
+    --font-size-4: 18px;
+    --font-size-5: 1.5rem; /** 24px */
+    --font-size-6: 2rem; /** 32px */
+    --font-size-7: 2.25rem; /** 36px */
+    --font-size-8: 2.5rem; /** 40px */
+    --stacks--1-inset-shadow: 0 0.5px 4px var(--system-shadow-1) inset;
+    --stacks-1-shadow: 0px 0px 1px var(--system-shadow-2),
+      0px 0.5px 2px var(--system-shadow-6);
+    --stacks-2-shadow: 0px 0px 1px var(--system-shadow-2),
+      0px 2px 4px var(--system-shadow-6);
+    --stacks-3-shadow: 0px 0px 2px var(--system-shadow-2),
+      0px 4px 8px var(--system-shadow-6);
+    --stacks-4-shadow: 0px 2px 4px var(--system-shadow-2),
+      0px 8px 16px var(--system-shadow-6);
+    --stacks-5-shadow: 0px 2px 8px var(--system-shadow-2),
+      0px 16px 24px var(--system-shadow-6);
+    --stacks-6-shadow: 0px 2px 8px var(--system-shadow-4),
+      0px 20px 32px var(--system-shadow-5);
+    --highlight: light-dark(var(--system-light-100), var(--system-dark-500));
+    --shade: light-dark(var(--system-light-500), var(--system-light-100));
+    --card-shadow: inset 0 4px 8px 2px
+        color-mix(in hsl, var(--highlight), transparent 80%),
+      inset 0 -2px 8px 2px color-mix(in hsl, var(--shade), transparent 80%);
+    --card-background: linear-gradient(
+        transparent,
+        transparent calc(100% - 80px),
+        light-dark(var(--system-light-300), var(--system-light-200))
+      ),
+      light-dark(var(--system-light-100), var(--system-light-300));
+    --stacks-balloon-shadow: 10px 10px 25px var(--system-shadow-7);
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 16px;
+    --border-radius-balloon: 67% 35% 69% 36% / 47% 31% 75% 59%;
+    --break-point--2-xl: 1440px;
+    --break-point--xl: 1280px;
+    --break-point--lg: 1024px;
+    --break-point--md: 768px;
+    --default-font: 'Mona-Sans', 'Arial', 'sans-serif';
+    --outline-offset: 5px;
+    --scrollbar-width: 12px;
+    --background-pattern: linear-gradient(
+        30deg,
+        var(--system-dark-200) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        var(--system-dark-200) 87.5%,
+        var(--system-dark-200)
+      ),
+      linear-gradient(
+        150deg,
+        var(--system-dark-200) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        var(--system-dark-200) 87.5%,
+        var(--system-dark-200)
+      ),
+      linear-gradient(
+        30deg,
+        var(--system-dark-200) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        var(--system-dark-200) 87.5%,
+        var(--system-dark-200)
+      ),
+      linear-gradient(
+        150deg,
+        var(--system-dark-200) 12%,
+        transparent 12.5%,
+        transparent 87%,
+        var(--system-dark-200) 87.5%,
+        var(--system-dark-200)
+      );
+    background: light-dark(#aebabb, var(--system-LIGHT_100));
+    min-height: 100vh;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    color-scheme: light dark;
+    scroll-behavior: smooth;
+    /* Add a bit of padding to allow room for the sticky header. 
+     This is important for progressive enhancement. As clicking anchor links
+     when JS is disabled will scroll anchor elements to the top of the viewport. */
+    scroll-padding-top: 80px;
+    &[data-dark-mode='true'] {
+      color-scheme: dark;
+      & body {
+        background-blend-mode: difference;
+        &::before {
+          mix-blend-mode: soft-light;
+        }
+      }
+    }
+    &[data-dark-mode='false'] {
+      color-scheme: light;
+    }
+    /*Scroll bars*/
+    & ::-webkit-scrollbar {
+      width: var(--scrollbar-width);
+      height: var(--scrollbar-width);
+    }
+    & ::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      background: var(--verdigris-700);
+      background: light-dark(var(--system-dark-200), var(--system-light-400));
+    }
+    & ::-webkit-scrollbar-corner {
+      background-color: light-dark(#aebabb, var(--system-light-200));
+    }
+    & ::-webkit-scrollbar-track {
+      background: light-dark(#aebabb, var(--system-light-200));
+    }
+    &:has(dialog[open]) {
+      overflow-y: hidden;
+    }
+  }
+
+  /* transition effect when changing color theme */
+  :root.theming,
+  :root.theming *,
+  :root.theming *::before,
+  :root.theming *::after {
+    transition: all 0.3s linear !important;
+  }
+
+  body {
+    min-block-size: 100vh;
+    height: fit-content;
+    font-family: var(--default-font);
+    background-image: radial-gradient(
+        at 50% 85%,
+        var(--system-light-100) 0,
+        light-dark(var(--system-dark-100), var(--system-light-200)) 150%
+      ),
+      linear-gradient(
+        0deg,
+        var(--system-light-100) 0,
+        light-dark(var(--system-dark-100), var(--system-light-200))
+      );
+    background-blend-mode: inherit;
+    background-color: var(--system-light-300);
+    display: grid;
+    grid-template-columns:
+      minmax(0, 1fr) minmax(0, var(--break-point--2-xl))
+      minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      inset: 0;
+      opacity: 0.04;
+      background-image: var(--background-pattern);
+      background-size: 20px 35px;
+      background-position:
+        0 0,
+        0 0,
+        10px 18px,
+        10px 18px,
+        0 0,
+        10px 18px;
+      filter: blur(2px);
+      mix-blend-mode: darken;
+    }
+  }
+
+  main {
+    display: grid;
+    grid-template-rows: min-content;
+    margin-inline: 2rem;
+    margin-block: 2rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    width: calc(100% - 2rem);
+    min-width: calc(100% - 2rem);
+    & .fullgrid {
+      grid-column: 1 / -1;
+    }
+
+    & > *:nth-child(2n + 1):not(.fullgrid) {
+      grid-column: 1 / 2;
+    }
+
+    @media (min-width: 1280px) {
+      min-width: calc(100% - 4rem);
+      max-width: calc(100% - 4rem);
+      &.threeColumnGrid {
+        grid-template-columns: repeat(3, minmax(320px, 1fr));
+        & > *:nth-child(2n + 1):not(.fullgrid) {
+          grid-column: unset;
+        }
+      }
+    }
+  }
+
+  hr {
+    border-style: solid;
+    border-top-color: light-dark(
+      var(--system-dark-200-16),
+      var(--system-light-200)
+    );
+    border-bottom-color: light-dark(
+      var(--system-light-500),
+      var(--system-light-300)
+    );
+    border-inline-color: transparent;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    white-space: pre-line;
+    color: var(--system-dark-300);
+  }
+
+  p {
+    white-space: pre-line;
+  }
+
+  .squircle {
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    &[data-with-shadow] {
+      &::before {
+        box-shadow: var(--stacks-2-shadow);
+      }
+    }
+    &::before {
+      content: '';
+      border-radius: 40%;
+      inset: 0;
+      position: absolute;
+    }
+    & img,
+    & picture {
+      clip-path: url(#squircle);
+      display: block;
+    }
+  }
+
+  .presentation {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  @media (max-width: 768px) {
+    main,
+    footer {
+      grid-template-columns: 1fr;
+    }
+    main {
+      margin-inline: 1rem;
+      column-gap: unset;
+    }
+    .fullgrid {
+      grid-column: 1 / 2;
+    }
+  }
+
+  .body-text {
+    font-size: var(--font-size-3);
+    font-weight: 300;
+    line-height: 1.5;
+    color: light-dark(var(--system-dark-400), var(--system-dark-100));
+    margin-block-end: 1rem;
+  }
+  .small-body-text {
+    font-size: var(--font-size-2);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  :root[data-dark-mode='true'] .small-body-text {
+    font-weight: 300;
+  }
+  .stylized-capitalized-text {
+    font-size: var(--font-size-2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: light-dark(var(--system-dark-100), var(--system-dark-300));
+  }
+
+  .stylized-lead-text {
+    font-size: var(--font-size-2);
+    font-weight: 600;
+  }
+
+  h2 {
+    color: var(--system-dark-300);
+    font-size: var(--font-size-6);
+    margin-block-end: 1rem;
+    text-wrap: balance;
+  }
+
+  h3,
+  h4 {
+    margin-block-end: 0.3rem;
+    text-wrap: balance;
+  }
+}
+
+button,
+span,
+input,
+label,
+textarea {
+  font-family: var(--default-font);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+@media (max-width: 768px) {
+  .mobile-only {
+    display: flex;
+  }
+  .desktop-only {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none;
+  }
+  .desktop-only {
+    display: flex;
+  }
+}
+
+/* Register your custom font family and tell the browser where to find it. */
+@font-face {
+  font-family: 'Mona-Sans';
+  src: url('/fonts/Mona-Sans.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}

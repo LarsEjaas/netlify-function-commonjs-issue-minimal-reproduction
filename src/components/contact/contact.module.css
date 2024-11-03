@@ -1,0 +1,110 @@
+.contactContainer {
+  padding-inline: 32px;
+  padding-block: 48px 16px;
+  display: block;
+  z-index: 1;
+  width: calc(100% - 64px);
+  margin-inline: auto;
+  margin-top: 42px;
+  background-color: light-dark(
+    var(--system-light-100),
+    var(--system-light-300)
+  );
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+  & span:nth-child(1) {
+    color: light-dark(var(--system-dark-200), var(--system-dark-300));
+    font-size: var(--font-size-2);
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+}
+
+.input,
+.textArea {
+  background-color: light-dark(
+    var(--system-light-300),
+    var(--system-light-200)
+  );
+  padding: 4px 8px;
+  line-height: 150%;
+  border: solid 1px light-dark(var(--system-light-500), var(--system-light-500));
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-2);
+  font-weight: 500;
+  color: light-dark(var(--system-dark-400), var(--system-dark-200));
+  &::placeholder {
+    color: light-dark(var(--system-dark-300-55), var(--system-light-400));
+  }
+  &:user-invalid:not(:optional) {
+    border: solid 1px light-dark(var(--flirt-400), var(--flirt-200));
+    &:focus-visible {
+      outline: light-dark(var(--flirt-400), var(--flirt-200)) auto 1px;
+    }
+    & + .error {
+      opacity: 1;
+    }
+  }
+}
+
+.textArea {
+  resize: none;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 100px;
+}
+
+.submitButton {
+  margin-left: auto;
+  cursor: pointer;
+  display: block;
+  padding: 12px 48px;
+  font-size: var(--font-size-2);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.75px;
+  border: solid 1px light-dark(var(--system-light-500), var(--system-light-500));
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-2);
+  color: light-dark(var(--system-dark-300), var(--system-dark-400));
+  --gradient-tone-1: var(--verdigris-100);
+  --gradient-tone-2: var(--verdigris-400);
+  --gradient-tone-3: var(--verdigris-500);
+  background: radial-gradient(
+      ellipse at 70% 10%,
+      color-mix(in hsl, var(--gradient-tone-1), transparent 70%) 0%,
+      color-mix(in hsl, var(--gradient-tone-2), transparent 70%) 30%,
+      color-mix(in hsl, var(--gradient-tone-3), transparent 70%) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      var(--gradient-tone-1) 0%,
+      var(--gradient-tone-2) 20%,
+      var(--gradient-tone-3) 40%
+    );
+  background-size: 100% 400%;
+  outline-offset: var(--outline-offset);
+  transition: filter 0.3s ease-in-out;
+  &:hover,
+  &:focus-visible,
+  &:active {
+    filter: brightness(1.1);
+  }
+}
+
+:global(html[data-dark-mode='true']) {
+  .submitButton {
+    --gradient-tone-1: var(--verdigris-300);
+    --gradient-tone-2: var(--verdigris-500);
+    --gradient-tone-3: var(--verdigris-700);
+  }
+}

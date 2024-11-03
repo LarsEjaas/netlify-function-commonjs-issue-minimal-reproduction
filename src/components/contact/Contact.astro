@@ -1,0 +1,78 @@
+---
+import styles from './contact.module.css';
+
+const FUNCTION_ENDPOINT = '/.netlify/functions/send-email';
+const CONTACT_FORM_NAME = 'writeToMe';
+---
+
+<div class={styles.contactContainer}>
+  <form
+    class={styles.form}
+    name={CONTACT_FORM_NAME}
+    autocomplete="off"
+    method="post"
+    action={FUNCTION_ENDPOINT}
+  >
+    <label class={styles.label}
+      ><span>name</span>
+      <input
+        class={styles.input}
+        autocomplete="on"
+        spellcheck="false"
+        placeholder="Please provide a name"
+        minlength="4"
+        type="text"
+        name="name"
+        id="modal-focus"
+        required="true"
+      />
+    </label>
+
+    <label class={styles.label}
+      ><span>email</span>
+      <input
+        class={styles.input}
+        multiple="false"
+        autocomplete="on"
+        spellcheck="false"
+        type="email"
+        placeholder="Please enter your email"
+        name="email"
+        required="true"
+      /></label
+    >
+    <label class={styles.label}
+      ><span>Subject</span><input
+        class={styles.input}
+        autocomplete="off"
+        type="text"
+        placeholder="Insert a subject"
+        name="subject"
+        required="true"
+      /></label
+    >
+    <label class={styles.label}
+      ><span>message</span><textarea
+        class={styles.textArea}
+        autocomplete="off"
+        name="message"
+        placeholder="Write a message"
+        required="true"></textarea>
+    </label>
+    <input
+      type="hidden"
+      name="language"
+      style="display: none;"
+      aria-hidden="true"
+      value={'en'}
+      readonly="true"
+    /><div>
+      <button
+        class={styles.submitButton}
+        id="sendEmail"
+        title="Send e-mail"
+        type="submit">send</button
+      >
+    </div>
+  </form>
+</div>

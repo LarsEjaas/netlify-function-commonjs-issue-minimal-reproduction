@@ -1,0 +1,45 @@
+---
+import './global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+/** Root layout should only be used directly in the index page file
+ * On other pages it will be included in other layouts */
+---
+
+<!doctype html>
+<html lang="en" data-dark-mode="false" data-js-enabled="false">
+  <head>
+    <link
+      rel="preload"
+      href="/fonts/Mona-Sans.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height initial-scale=1.0, viewport-fit=cover"
+    />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64x64.png" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <svg aria-hidden="true" height="0">
+      <defs>
+        <clipPath id="squircle" clipPathUnits="objectBoundingBox"
+          ><path
+            d="M0,0.5 C0,0.115 0.115,0 0.5,0 s0.5,0.115 0.5,0.5 -0.115,0.5 -0.5,0.5 S0,0.885 0,0.5"
+          ></path>
+        </clipPath>
+      </defs>
+    </svg>
+    <slot />
+  </body>
+</html>

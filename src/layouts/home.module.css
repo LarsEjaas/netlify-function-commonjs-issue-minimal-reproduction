@@ -1,0 +1,66 @@
+@keyframes getMe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+.presentation {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.presentationCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  white-space: pre-line;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.actionEntries {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  & a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    outline-offset: var(--outline-offset);
+    border-radius: var(--border-radius-sm);
+    text-decoration: underline transparent;
+    transition: text-decoration-color 0.25s;
+    color: light-dark(var(--system-dark-100), var(--system-dark-200));
+    & p {
+      font-size: var(--font-size-2);
+      font-weight: 600;
+      color: light-dark(var(--system-dark-100), var(--system-dark-200));
+      margin-block-end: unset;
+    }
+    & .downloadIcon {
+      overflow: visible;
+    }
+    &:hover,
+    &:focus-visible {
+      text-decoration-color: light-dark(
+        var(--system-dark-100),
+        var(--system-dark-300)
+      );
+      transition: text-decoration-color 0.4s;
+      & .downloadIcon g {
+        animation-name: getMe;
+        animation-timing-function: ease-in-out;
+        animation-duration: 0.8s;
+        animation-iteration-count: infinite;
+      }
+    }
+  }
+}
