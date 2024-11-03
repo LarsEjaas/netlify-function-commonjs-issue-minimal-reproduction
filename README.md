@@ -22,13 +22,13 @@
 Clone the repository to your local development environment:
 
 ```bash
-git clone https://github.com/LarsEjaas/lars-ejaas-portfolio-v2.git
+git clone https://github.com/LarsEjaas/netlify-function-commonjs-issue-minimal-reproduction.git
 ```
 
 Navigate to the project directory:
 
 ```bash
-cd lars-ejaas-portfolio-v2
+cd netlify-function-commonjs-issue-minimal-reproduction
 ```
 
 Install dependencies:
