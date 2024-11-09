@@ -41,6 +41,6 @@
     "forceConsistentCasingInFileNames": true
   },
   "exclude": ["node_modules"],
-  "include": ["src", "env.d.ts", "netlify/functions"],
+  "include": ["src", "env.d.ts", "functions"],
   "$schema": "https://json.schemastore.org/tsconfig"
 }

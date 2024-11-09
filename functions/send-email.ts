@@ -1,4 +1,4 @@
-import { type HandlerContext, type HandlerEvent } from '@netlify/functions';
+import { type HandlerContext, type Config } from '@netlify/functions';
 import { z } from 'zod';
 import nodemailer from 'nodemailer';
 import hbs from 'nodemailer-express-handlebars';
@@ -7,6 +7,8 @@ import { type Options as MailOptions } from 'nodemailer/lib/smtp-transport';
 import { create } from 'express-handlebars';
 import path from 'path';
 import dotenv from 'dotenv';
+
+const FUNCTION_ENDPOINT = '/.netlify/functions/send-email';
 
 const CONTACT_FORM_NAME = 'writeToMe';
 
@@ -77,10 +79,7 @@ const mockTransporter = {
   },
 };
 
-export const handler = async (
-  event: HandlerEvent,
-  _context: HandlerContext
-) => {
+export const handler = async (req: Request, _context: HandlerContext) => {
   // Enable CORS for local development
   const headers = {
     'Access-Control-Allow-Origin': '*',
@@ -88,15 +87,18 @@ export const handler = async (
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
   } as const;
 
+  // Default to English redirect
+  let redirectUrl = REDIRECT_URL_EN;
+
   // Handle preflight requests
-  if (event.httpMethod === 'OPTIONS') {
+  if (req.method === 'OPTIONS') {
     return {
       statusCode: 204,
       headers,
     };
   }
 
-  if (event.httpMethod !== 'POST') {
+  if (req.method !== 'POST') {
     return {
       statusCode: 501,
       body: JSON.stringify({ message: 'Not Implemented' }),
@@ -105,36 +107,48 @@ export const handler = async (
   }
 
   try {
-    if (!event.body) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({ error: 'No request body provided' }),
-      };
+    const body = await req.json();
+    if (!body) {
+      return new Response(
+        JSON.stringify({ error: 'No request body provided' }),
+        {
+          status: 400,
+          headers,
+        }
+      );
     }
 
-    const parseResult = PayloadSchema.safeParse(JSON.parse(event.body).payload);
-
-    console.log('JSON.parse(event.body)', JSON.parse(event.body));
+    const parseResult = PayloadSchema.safeParse(body.payload);
 
     if (!parseResult.success) {
-      return {
-        statusCode: 400,
-        headers,
-        body: JSON.stringify({
+      return new Response(
+        JSON.stringify({
           error: 'Validation failed',
           details: parseResult.error.errors,
         }),
-      };
+        {
+          status: 400,
+          headers,
+        }
+      );
     }
 
     const { data: payload } = parseResult;
-    const { first_name, body, data, form_name, site_url } = payload;
+    const {
+      first_name,
+      body: messageBody,
+      data,
+      form_name,
+      site_url,
+    } = payload;
     const {
       name: sender_name,
       email: sender_email,
       language: sender_language,
     } = data;
+
+    // Set redirect URL based on language
+    redirectUrl = sender_language === 'da' ? REDIRECT_URL_DA : REDIRECT_URL_EN;
 
     const cleanSiteUrl = site_url.replace(/^https?:\/\//, '');
 
@@ -208,42 +222,43 @@ export const handler = async (
       };
 
       await Promise.all([
-        // Confirmation email to the form submitter
-        new Promise((resolve, reject) => {
-          // send confirmation email to sender
-          transporter.sendMail(mailConfirmationOptions, (error, info) =>
-            error ? reject(error) : resolve(info)
-          );
-        }),
+        // send confirmation email to sender
+        transporter.sendMail(mailConfirmationOptions),
         // Notification email to receiver
-        new Promise((resolve, reject) => {
-          transporter.sendMail(mailNotificationOptions, (error, info) =>
-            error ? reject(error) : resolve(info)
-          );
-        }),
+        transporter.sendMail(mailNotificationOptions),
       ]);
     }
 
-    return {
-      statusCode: 200,
-      headers,
-      body: JSON.stringify({
-        message: `Emails ${process.env.NODE_ENV === 'development' ? 'would be' : 'was'} sent successFully. Confirmation send to ${sender_name} at ${sender_email}`,
+    return new Response(
+      JSON.stringify({
+        message: `Emails ${
+          process.env.NODE_ENV === 'development' ? 'would be' : 'was'
+        } sent successfully. Confirmation sent to ${sender_name} at ${sender_email}`,
       }),
-    };
+      {
+        status: 200,
+        headers,
+      }
+    );
   } catch (error) {
     console.error('Error processing request:', error);
-    return {
-      statusCode: 500,
-      headers: {
-        ...headers,
-        Location: sender_language === 'en' ? REDIRECT_URL_EN : REDIRECT_URL_DA,
-      },
-      body: JSON.stringify({
+    return new Response(
+      JSON.stringify({
         error: 'Internal server error',
         message:
           error instanceof Error ? error.message : 'Failed to send emails',
       }),
-    };
+      {
+        status: 500,
+        headers: {
+          ...headers,
+          Location: redirectUrl,
+        },
+      }
+    );
   }
+};
+
+export const config: Config = {
+  path: FUNCTION_ENDPOINT,
 };
